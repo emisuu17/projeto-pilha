@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercício de Pilha</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>Conversor Decimal para Binário</h2>
+        <p>Digite um número decimal:</p>
+
+        <input type="number" id="numeroDecimal" placeholder="ex: 10" min="0">
+        <br>
+        <button onclick="realizarConversao()">Converter</button>
+
+        <h1 id="textoResultado"></h1>
+    </div>
+
+    <script>
+
+        class Stack {
+            constructor() {
+                this.items = [];
+            }
+            push(element) {
+                this.items.push(element);
+            }
+            pop() {
+                return this.items.pop();
+            }
+            isEmpty() {
+                return this.items.length === 0;
+            }
+        }
+
+
+        function divideBy2(decNumber) {
+            const restoStack = new Stack();
+            let resto;
+            let binaryString = '';
+
+
+            if (decNumber === 0) {
+                return '0';
+            }
+
+            while (decNumber > 0) {
+                resto = Math.floor(decNumber % 2);
+                restoStack.push(resto);
+                decNumber = Math.floor(decNumber / 2);
+            }
+
+            while (!restoStack.isEmpty()) {
+                binaryString += restoStack.pop().toString();
+            }
+
+            return binaryString;
+        }
+
+        function realizarConversao() {
+            let input = document.getElementById("numeroDecimal").value;
+            let numero = parseInt(input);
+            let resultadoElemento = document.getElementById("textoResultado");
+
+           
+            if (isNaN(numero) || numero < 0) {
+                resultadoElemento.innerHTML = "Digite um número válido!";
+                resultadoElemento.style.color = "red";
+                return;
+            }
+
+
+            let resultadoBinario = divideBy2(numero);
+
+
+            resultadoElemento.innerHTML = resultadoBinario;
+            resultadoElemento.style.color = "green";
+        }
+    </script>
+</body>
+
+</html>

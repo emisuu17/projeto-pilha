@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercício de Pilha</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>Editor de Texto com Pilha</h2>
+        <p>Digite algo abaixo. Cada alteração é salva na pilha.</p>
+        <textarea id="meuTexto" oninput="salvarEstado()" placeholder="Comece a digitar..."></textarea>
+        <br>
+
+        <button onclick="desfazer()">Desfazer</button>
+    </div>
+
+    <script>
+        class Stack {
+            constructor() {
+                this.items = [];
+            }
+
+            push(element) {
+                this.items.push(element);
+            }
+
+            pop() {
+                return this.items.pop();
+            }
+
+            isEmpty() {
+                return this.items.length === 0;
+            }
+
+            peek() {
+                if (this.isEmpty()) {
+                    return "";
+                }
+                return this.items[this.items.length - 1];
+            }
+        }
+
+
+        let historicoPilha = new Stack();
+
+        historicoPilha.push("");
+
+        function salvarEstado() {
+            let textoAtual = document.getElementById("meuTexto").value;
+
+
+            if (textoAtual !== historicoPilha.peek()) {
+                historicoPilha.push(textoAtual);
+            }
+        }
+
+
+        function desfazer() {
+            if (historicoPilha.items.length > 1) {
+
+                historicoPilha.pop();
+
+                let textoAnterior = historicoPilha.peek();
+
+                document.getElementById("meuTexto").value = textoAnterior;
+
+            } else {
+                alert("Não há mais ações para desfazer!");
+            }
+        }
+    </script>
+</body>
+
+</html>
